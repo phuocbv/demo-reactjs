@@ -1,23 +1,23 @@
 var Tweet = React.createClass({
-  getInitialState: function() {
+    getInitialState: function() {
       return {
           alltweets: []
       };
-  },
-  componentDidMount: function() {
+    },
+    componentDidMount: function() {
       $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-  },
-  _getTweets: function() {
+    },
+    _getTweets: function() {
       $.get('/tweets', function(data) {
           this.setState({ alltweets: data });
           console.log(data);
       }.bind(this));
-  },
-  render: function() {
+    },
+    render: function() {
       var handleTweets = this.state.alltweets.map( function(twt) {
           return <TweetBanner key={twt.id} id={twt.id} tweet={twt.tweet} />
       });
@@ -30,15 +30,15 @@ var Tweet = React.createClass({
             {handleTweets}
           </div>
       );
-      }
-  });
-    var TwitterHeader = React.createClass({
-      render: function() {
-        return (
-          <h2> Post your swag ! </h2>
-        );
-      }
-    });
+    }
+});
+var TwitterHeader = React.createClass({
+  render: function() {
+    return (
+      <h2> Post your swag ! </h2>
+    );
+  }
+});
 
     var TwitterPoster = React.createClass({
       _handleClick: function() {
@@ -78,17 +78,9 @@ var Tweet = React.createClass({
       },
       _handleSubmit: function() {
           var editedValue = this.refs.editTweetValue.value;
-        //   $.patch('/tweets/' + this.props.id + '', { id: this.props.id, tweet: editedValue },function() {
-        //       this.setState({ editinput: false });
-        //   }.bind(this));
-
-          client({
-              method: 'PATCH',
-              path: '/tweets/' + this.props.id,
-              entity: { id: this.props.id, tweet: editedValue }
-          }).done(response => {
-			this.setState({ editinput: false });
-        });
+          $.patch('/tweets/' + this.props.id + '', { id: this.props.id, tweet: editedValue },function() {
+              this.setState({ editinput: false });
+          }.bind(this));
       },
       render: function() {
           return(

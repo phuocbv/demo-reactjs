@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::resource('tweets', 'BlogController');
+Route::get('sendbasicemail','MailController@basic_email');
