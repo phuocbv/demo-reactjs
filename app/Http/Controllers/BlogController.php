@@ -34,4 +34,9 @@ class BlogController extends Controller
     	$spec->tweet = $editedtweet;
     	$spec->save();
     }
+
+	public function show($id)
+	{
+
+	}
 }
